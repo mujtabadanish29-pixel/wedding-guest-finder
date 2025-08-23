@@ -13,11 +13,10 @@
       margin: 0;
       padding: 0;
       position: relative;
-      background: none; /* removed ivory texture */
+      background: none;
       overflow-x: hidden;
     }
 
-    /* faded overlay couple picture */
     .background-overlay {
       position: fixed;
       top: 0;
@@ -26,13 +25,13 @@
       height: 100%;
       background: url("https://i.imgur.com/DrZGNwO.jpg") no-repeat center center;
       background-size: cover;
-      opacity: 0.25; /* adjust fade strength */
-      z-index: -1;   /* send behind content */
+      opacity: 0.25;
+      z-index: -1;
     }
 
     header {
-      background-color: transparent; /* removed maroon background */
-      color: #b8860b; /* dark gold */
+      background-color: transparent;
+      color: #b8860b;
       padding: 30px 15px;
     }
 
@@ -54,7 +53,7 @@
       padding: 15px;
       width: 90%;
       max-width: 420px;
-      background-color: rgba(255, 255, 255, 0.92); /* semi-transparent card */
+      background-color: rgba(255, 255, 255, 0.92);
       border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     }
@@ -96,7 +95,6 @@
 </head>
 <body>
 
-  <!-- faded background overlay -->
   <div class="background-overlay"></div>
 
   <header>
@@ -119,10 +117,11 @@
       const csvText = await response.text();
       const rows = csvText.trim().split('\n').slice(1); // Skip header row
 
+      // CSV structure: Name,TableImageURL
       rows.forEach(row => {
-        const [name, table] = row.split(',');
-        if (name && table) {
-          guests[name.trim()] = `floorplan_table${table.trim()}.jpg`;
+        const [name, imageUrl] = row.split(',');
+        if (name && imageUrl) {
+          guests[name.trim()] = imageUrl.trim();
         }
       });
     }
@@ -143,7 +142,7 @@
           guestDiv.textContent = name;
 
           const img = document.createElement('img');
-          img.src = guests[name];
+          img.src = guests[name]; // public URL from CSV
           img.alt = `Table for ${name}`;
           img.classList.add('floorplan');
 
