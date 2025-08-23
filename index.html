@@ -118,8 +118,11 @@
 
       rows.forEach(row => {
         const [name, table, tableImageURL] = row.split(',');
-        if (name && tableImageURL) {
-          guests[name.trim()] = tableImageURL.trim(); // Use public image URL
+        if (name && table && tableImageURL) {
+          guests[name.trim()] = {
+            table: table.trim(),
+            image: tableImageURL.trim()
+          };
         }
       });
     }
@@ -137,10 +140,11 @@
 
           const guestDiv = document.createElement('div');
           guestDiv.classList.add('guest-name');
-          guestDiv.textContent = name;
+          // Display Name | Table Number
+          guestDiv.innerHTML = `${name} | <span style="color:#b8860b;">Table ${guests[name].table}</span>`;
 
           const img = document.createElement('img');
-          img.src = guests[name]; // URL from CSV
+          img.src = guests[name].image; // URL from CSV
           img.alt = `Table for ${name}`;
           img.classList.add('floorplan');
 
