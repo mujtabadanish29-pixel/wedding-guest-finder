@@ -17,7 +17,6 @@
       overflow-x: hidden;
     }
 
-    /* faded overlay couple picture */
     .background-overlay {
       position: fixed;
       top: 0;
@@ -112,16 +111,15 @@
   <script>
     let guests = {};
 
-    // Fetch the CSV and build the guest list with table image URL
     async function init() {
       const response = await fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vRk69n-7osqxKsja6KF258L7uTws4R_yB8GCIY3U9NxS19DpnEKmuJH6VjuLuZs6D1s37MWQC0_0rgf/pub?output=csv');
       const csvText = await response.text();
-      const rows = csvText.trim().split('\n').slice(1); // Skip header row
+      const rows = csvText.trim().split('\n').slice(1); // Skip header
 
       rows.forEach(row => {
         const [name, table, tableImageURL] = row.split(',');
         if (name && tableImageURL) {
-          guests[name.trim()] = tableImageURL.trim();
+          guests[name.trim()] = tableImageURL.trim(); // Use public image URL
         }
       });
     }
@@ -142,7 +140,7 @@
           guestDiv.textContent = name;
 
           const img = document.createElement('img');
-          img.src = guests[name]; // use the table image URL from CSV
+          img.src = guests[name]; // URL from CSV
           img.alt = `Table for ${name}`;
           img.classList.add('floorplan');
 
