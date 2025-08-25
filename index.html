@@ -73,12 +73,12 @@
 
     .guest-name {
       font-weight: bold;
-      font-size: 1.3rem; /* Increased font size */
+      font-size: 1.3rem; 
       margin: 15px 0 10px 0;
     }
 
     .guest-name span {
-      font-size: 1.3rem; /* Table number slightly bigger too */
+      font-size: 1.3rem;
     }
 
     .floorplan {
@@ -87,6 +87,7 @@
       height: auto;
       border: 2px solid #ccc;
       border-radius: 10px;
+      cursor: pointer; /* make it look clickable */
     }
 
     @media (max-width: 480px) {
@@ -145,13 +146,17 @@
 
           const guestDiv = document.createElement('div');
           guestDiv.classList.add('guest-name');
-          // Display Name | Table Number
           guestDiv.innerHTML = `${name} | <span style="color:#b8860b;">Table ${guests[name].table}</span>`;
 
           const img = document.createElement('img');
-          img.src = guests[name].image; // URL from CSV
+          img.src = guests[name].image;
           img.alt = `Table for ${name}`;
           img.classList.add('floorplan');
+
+          // When clicking image -> open full in new tab
+          img.addEventListener('click', () => {
+            window.open(guests[name].image, '_blank');
+          });
 
           guestDiv.appendChild(img);
           resultsDiv.appendChild(guestDiv);
