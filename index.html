@@ -75,10 +75,11 @@
       font-weight: bold;
       font-size: 1.3rem; /* Increased font size */
       margin: 15px 0 10px 0;
+      cursor: pointer; /* clickable */
     }
 
     .guest-name span {
-      font-size: 1.3rem; /* Table number slightly bigger too */
+      font-size: 1.3rem;
     }
 
     .floorplan {
@@ -87,6 +88,7 @@
       height: auto;
       border: 2px solid #ccc;
       border-radius: 10px;
+      display: none; /* hidden by default */
     }
 
     @media (max-width: 480px) {
@@ -145,16 +147,21 @@
 
           const guestDiv = document.createElement('div');
           guestDiv.classList.add('guest-name');
-          // Display Name | Table Number
           guestDiv.innerHTML = `${name} | <span style="color:#b8860b;">Table ${guests[name].table}</span>`;
 
+          // Create hidden image
           const img = document.createElement('img');
-          img.src = guests[name].image; // URL from CSV
+          img.src = guests[name].image;
           img.alt = `Table for ${name}`;
           img.classList.add('floorplan');
 
-          guestDiv.appendChild(img);
+          // Toggle image visibility when clicked
+          guestDiv.addEventListener('click', () => {
+            img.style.display = img.style.display === 'none' ? 'block' : 'none';
+          });
+
           resultsDiv.appendChild(guestDiv);
+          resultsDiv.appendChild(img);
         }
       }
 
